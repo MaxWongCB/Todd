@@ -3,7 +3,7 @@
 <b>Add any important notes about running files/setup commands here.</b>
 
 ### Model Training
-```model``` folder from ```Lab_Files/Week06-07/network/scripts``` has been removed as they are too big to upload. 
+```model``` folder from ```Week06-07/network/scripts``` has been removed as they are too big to upload. 
 I have zipped it up and put them on the slack channel so if you need them you can access from there then add them to your local copy.
 
 ### Rebuilding the catkin_ws
