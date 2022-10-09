@@ -14,7 +14,7 @@ Has not been included here as there was complications with building the workspac
 ### Setting up user credentials
 To set Github user and email in WSL:<br></br>
 ```git config --global user.name <YourGithubUserName>```<br></br>
-```git config --global user.email <Your GithubEmail>```
+```git config --global user.email <YourGithubEmail>```
 
 ### Creating Branches
 After cloning the Repo, you can create a branch from the master with: <br></br>
