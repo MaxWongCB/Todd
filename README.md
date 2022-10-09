@@ -34,4 +34,7 @@ When you want to save some changes to the code, save the file(s) you're working 
 ### Merging with master branch
 ...
 ### other useful commands
-...
+```git fetch```  - will notify you of any changes to the online repo that you may/may not want to add to your local copy.<br></br>
+```git pull``` - will then add the changes that you've fetched.<br></br>
+```git status``` will list any modified files that are not added to the next commit.<br></br>
+```git log``` will show the log for previous commits.
