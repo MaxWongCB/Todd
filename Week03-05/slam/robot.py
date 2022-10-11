@@ -25,6 +25,7 @@ class Robot:
         if angular_velocity == 0:
             self.state[0] += np.cos(self.state[2]) * linear_velocity * dt
             self.state[1] += np.sin(self.state[2]) * linear_velocity * dt
+            
         else:
             th = self.state[2]
             self.state[0] += linear_velocity / angular_velocity * (np.sin(th+dt*angular_velocity) - np.sin(th))
@@ -151,5 +152,6 @@ class Robot:
         # Compute covariance
         cov = np.diag((drive_meas.left_cov, drive_meas.right_cov))
         cov = Jac @ cov @ Jac.T
+        
         
         return cov
