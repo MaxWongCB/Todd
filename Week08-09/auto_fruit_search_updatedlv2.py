@@ -437,23 +437,13 @@ if __name__ == "__main__":
         all_obstacles.append(Circle(aruco_true_pos[i,0],aruco_true_pos[i,1],0.03)) # Make circle around obstacle (assume r = 0.03) to avoid
 
     for j in range(len(fruits_true_pos)):  # Loop to generate paths for many fruits
-    ## RRT generate path to 1 fruit -> need generate multiple RRT for different fruits pos ##
-        #### Adjust goal position (not fruit position) to avoid hitting fruit ####
-        vector = goal_i - start_i
-        if vector[0] > 0:                 # If vector = 0 -> No change
-            goal_i[0] = goal_i[0] - 0.2
-        if vector[0] < 0:
-            goal_i[0] = goal_i[0] + 0.2
-        if vector[1] > 0:
-            goal_i[1] = goal_i[1] - 0.2
-        if vector[1] < 0:
-            goal_i[1] = goal_i[1] + 0.2                         
+    ## RRT generate path to 1 fruit -> need generate multiple RRT for different fruits pos ##                     
         #### Adjust path searching area (width & height) ####
-        if goal_i[0] < 0:
+        if goal_i[0] < start_i[0]:
             width_i = -5
         else:
             width_i = 5
-        if goal_i[1] < 0:
+        if goal_i[1] < start_i[1]:
             height_i = -5
         else:
             height_i = 5
@@ -467,6 +457,18 @@ if __name__ == "__main__":
 
     #### KIEN: Change from input waypoint --> take waypoint from generated path: ######
             for k in range(len(path)-1,-1,-1):
+         #### Adjust goal position (not fruit position) to avoid hitting fruit ####
+                if k == 0:
+                    vector[0] = path[k][0] - path[k+1][0]
+                    vector[1] = path[k][1] - path[k+1][1]
+                    if vector[0] > 0:                 # If vector = 0 -> No change
+                        path[k][0] = path[k][0] - 0.02
+                    if vector[0] < 0:
+                        path[k][0] = path[k][0] + 0.02
+                    if vector[1] > 0:
+                        path[k][1] = path[k][1] - 0.02
+                    if vector[1] < 0:
+                        path[k][1] = path[k][1] + 0.02             
                 x = path[k][0]
                 y = path[k][1]
                 # robot drives to the waypoint
@@ -490,5 +492,6 @@ if __name__ == "__main__":
         if j == len(fruits_true_pos)-1:
             break
         time.sleep(3)
-        start_i = goal_i   # Set Start: Current position ( previous Goal)
+        start_i[0] = path[k][0]   # Set Start: Current position ( previous Goal)
+        start_i[1] = path[k][1]
         goal_i = fruits_true_pos[j+1]  # Set next Goal: Next fruit position
