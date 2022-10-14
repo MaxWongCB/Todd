@@ -451,44 +451,42 @@ if __name__ == "__main__":
         #################################################
         path = rrt.planning()
     # The following code is only a skeleton code the semi-auto fruit searching task
-        while True:
+        #while True:
             # enter the waypoints
             # instead of manually enter waypoints, you can get coordinates by clicking on a map, see camera_calibration.py
 
     #### KIEN: Change from input waypoint --> take waypoint from generated path: ######
-            for k in range(len(path)-1,-1,-1):
-         #### Adjust goal position (not fruit position) to avoid hitting fruit ####
-                if k == 0:
-                    vector[0] = path[k][0] - path[k+1][0]
-                    vector[1] = path[k][1] - path[k+1][1]
-                    if vector[0] > 0:                 # If vector = 0 -> No change
-                        path[k][0] = path[k][0] - 0.02
-                    if vector[0] < 0:
-                        path[k][0] = path[k][0] + 0.02
-                    if vector[1] > 0:
-                        path[k][1] = path[k][1] - 0.02
-                    if vector[1] < 0:
-                        path[k][1] = path[k][1] + 0.02             
-                x = path[k][0]
-                y = path[k][1]
-                # robot drives to the waypoint
-                waypoint = [x,y]
-                drive_to_point(waypoint, robot_pose)
+        for k in range(len(path)-2,-1,-1):
+        #### Adjust goal position (not fruit position) to avoid hitting fruit ####
+            if k == 0:
+                vector_x = path[k][0] - path[k+1][0]
+                vector_y = path[k][1] - path[k+1][1]
+                if vector_x > 0:                 # If vector = 0 -> No change
+                    path[k][0] = path[k][0] - 0.02
+                if vector_x < 0:
+                    path[k][0] = path[k][0] + 0.02
+                if vector_y > 0:
+                    path[k][1] = path[k][1] - 0.02
+                if vector_y < 0:
+                    path[k][1] = path[k][1] + 0.02         
+            x = path[k][0]
+            y = path[k][1]
+            # robot drives to the waypoint
+            waypoint = [x,y]
+            drive_to_point(waypoint, robot_pose)
                 # update robot pose
-                robot_pose = get_robot_pose(robot_pose, waypoint) # update robot pose
-                img = take_pic(ppi) # use camera
-                lms, aruco_img = aruco_det.detect_marker_positions(img)
-                drive_meas = measure.Drive(1,1,1,10000,10000)
-                ekf.predict(drive_meas)
+                #robot_pose = get_robot_pose(robot_pose, waypoint) # update robot pose
+                #img = take_pic(ppi) # use camera
+                #lms, aruco_img = aruco_det.detect_marker_positions(img)
+                #drive_meas = measure.Drive(1,1,1,10000,10000)
+                #ekf.predict(drive_meas)
                 #print(lms)
-                ekf.update(lms)
+                #ekf.update(lms)
                 #print(ekf.get_state_vector())
                 #print("Finished driving to waypoint: {}; New robot pose: {}".format(waypoint,robot_pose))
-                # exit
-                ppi.set_velocity([0, 0])
-                #uInput = input("Add a new waypoint? [Y/N]")
-                #if uInput == 'N' or uInput == 'n':
-                #    break
+            # exit
+            ppi.set_velocity([0, 0])
+
         if j == len(fruits_true_pos)-1:
             break
         time.sleep(3)
