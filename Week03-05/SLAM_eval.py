@@ -87,6 +87,9 @@ def compute_rmse(points1, points2):
 
     return np.sqrt(MSE)
 
+def calculate_score(rmse,num_tags):
+    score = ((0.2 - rmse)/(0.175))*80 + 2*num_tags
+    return score
 
 if __name__ == '__main__':
     import argparse
@@ -113,8 +116,9 @@ if __name__ == '__main__':
     print("Translation Vector: ({}, {})".format(x[0,0], x[1,0]))
 
     rmse = compute_rmse(us_vec_aligned, gt_vec)
+    score = calculate_score(rmse,len(taglist))
     print("The RMSE after alignment: {}".format(rmse))
-
+    print(f"The slam score was {score}")
     print()
     print("Pred Locations")
     print(taglist)

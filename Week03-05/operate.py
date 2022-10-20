@@ -305,7 +305,7 @@ if __name__ == "__main__":
         operate.update_keyboard()
         operate.take_pic()
         drive_meas = operate.control()
-        print(drive_meas)
+        #print(drive_meas)
         operate.update_slam(drive_meas)
         operate.record_data()
         operate.save_image()
